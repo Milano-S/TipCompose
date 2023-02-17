@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -66,7 +67,7 @@ fun TipTimeScreen() {
         Spacer(Modifier.height(16.dp))
         EditNumberField(
             label = R.string.bill_amount,
-            keyboardOptions = KeyboardOptions(
+            keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
             ),
@@ -78,7 +79,7 @@ fun TipTimeScreen() {
         )
         EditNumberField(
             label = R.string.how_was_the_service,
-            keyboardOptions = KeyboardOptions(
+            keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done
             ),
@@ -87,12 +88,6 @@ fun TipTimeScreen() {
             ),
             value = tipInput,
             onValueChange = { tipInput = it }
-        )
-        Text(
-            text = stringResource(R.string.tip_amount, tip),
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
         )
         RoundTheTipRow(roundUp = roundUp, onRoundUpChanged = { roundUp = it })
         Spacer(Modifier.height(24.dp))
@@ -151,7 +146,8 @@ fun RoundTheTipRow(
     }
 }
 
-private fun calculateTip(
+@VisibleForTesting
+internal fun calculateTip(
     amount: Double,
     tipPercent: Double = 15.0,
     roundUp: Boolean
