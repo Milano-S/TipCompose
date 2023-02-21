@@ -1,2 +1,2 @@
 # TipCompose
-🚀Jetpack Compose Tip Demo 
+🚀Jetpack Compose Demo 
